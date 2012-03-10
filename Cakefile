@@ -10,8 +10,10 @@ task 'coffee', ->
   #coffee2.stderr.on 'data', (data) -> console.log data.toString().trim()
 
 task 'build', ->
-  fs.readFile "./src/design.io/client.coffee", "utf-8", (error, result) ->
-    mint.coffee result, (error, result) ->
-      fs.writeFile "design.io.js", result
-      mint.uglifyjs result, (error, compressed) ->
-        fs.writeFile "design.io.min.js", compressed
+  result = fs.readFileSync "./src/design.io/client.coffee", "utf-8"
+  mint.coffee result, {}, (error, result) ->
+    fs.writeFileSync "design.io.js", result
+    mint.uglifyjs result, (error, compressed) ->
+      fs.writeFile "design.io.min.js", compressed
+      
+  setTimeout((=>), 1000)

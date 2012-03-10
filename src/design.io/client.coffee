@@ -5,7 +5,7 @@ class window.DesignIO
     @watchers     = []
     @port         = options.port  || 4181
     @namespace    = namespace
-    @url          = options.url   || "#{window.location.protocol}//#{window.location.hostname}:#{@port}/#{namespace}"
+    @url          = options.url   || "#{window.location.protocol}//#{window.location.hostname}:#{@port}"
     @socket       = io.connect(@url)
     @connect()
     
@@ -55,14 +55,16 @@ class window.DesignIO
   # id, path, then anything else
   log: (data) ->
     if typeof(data) == "object"
-      data.userAgent = window.navigator.userAgent
-      data.url       = window.location.href
+      data.userAgent  = window.navigator.userAgent
+      data.url        = window.location.href
+      data.namespace  = @namespace
     
     @socket.emit 'log', JSON.stringify(data, @replacer)
   
   userAgent: ->
     userAgent:  window.navigator.userAgent
     url:        window.location.href
+    namespace:  @namespace
     
   replacer: (key, value) ->
     if typeof value == "function"

@@ -62,7 +62,7 @@ class Project
     throw new Error("Only one project per namespace") if store.hasOwnProperty(@namespace)
     store[@namespace]     = @
     
-    @hook       = new Hook(name: "design.io-watcher::#{@namespace}", debug: true, silent: false)
+    @hook       = new Hook(name: "design.io-watcher::#{@namespace}", debug: false, silent: true)
     
   watch: ->
     hook = @hook
